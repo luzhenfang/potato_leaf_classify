@@ -1,0 +1,24 @@
+#FROM bitnami/pytorch:1.10.0
+# FROM continuumio/anaconda3
+FROM python:3.7
+ENV PATH /usr/local/bin:$PATH
+
+WORKDIR /code
+
+COPY . .
+
+
+RUN pip3 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+# RUN python3 -m pip install --upgrade pip
+RUN pip3 install torch torchvision --extra-index-url https://download.pytorch.org/whl/cpu
+
+# flask  跨域
+RUN pip3 install flask
+RUN pip3 install flask-cors
+
+
+VOLUME /data
+
+EXPOSE 8080
+
+CMD ["python3","serv.py"]
